@@ -1,14 +1,10 @@
 package org.example.companyapi.model;
 
 import jakarta.persistence.*;
-import org.apache.catalina.User;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "general_record")
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 public class GlobalRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +12,12 @@ public class GlobalRecord {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private org.apache.catalina.User createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
     private User updatedBy;
 }
-

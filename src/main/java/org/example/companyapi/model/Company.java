@@ -13,12 +13,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "company")
-public class Company extends GlobalRecord        {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID sysId;
+public class Company extends GlobalRecord {
     private String id;
     private String companyName;
     private String legalName;
@@ -57,12 +53,4 @@ public class Company extends GlobalRecord        {
     @OneToMany
     List<Document> documentsList;
     private String status;
-    private String createdAt;
-    private String updatedAt;
-
-
-
-
-
-
 }

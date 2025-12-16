@@ -12,12 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "users")
 public class User extends GlobalRecord{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+
     private String fullName;
     private String email;
     private String password;

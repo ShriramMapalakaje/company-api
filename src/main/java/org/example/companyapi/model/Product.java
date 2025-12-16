@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "product")
 public class Product  extends GlobalRecord {
 
-    @ManyToOne
-    ManufacturerCompany manufacturerCompany;
+
     @Column(unique = true)
     String skuCode;
     String branchName;
