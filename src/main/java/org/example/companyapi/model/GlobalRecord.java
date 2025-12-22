@@ -1,23 +1,28 @@
 package org.example.companyapi.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
-@MappedSuperclass
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
+@Table(name = "global_records")
 public class GlobalRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID sysId;
-
+    UUID sysId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
     @ManyToOne
-    @JoinColumn(name = "created_by")
     private User createdBy;
-
-    @ManyToOne
-    @JoinColumn(name = "updated_by")
-    private User updatedBy;
+    @ManyToMany
+    private List<User> updatedBy;
 }

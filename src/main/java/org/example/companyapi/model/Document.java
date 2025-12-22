@@ -1,19 +1,18 @@
 package org.example.companyapi.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
-@Entity
 @Data
-@Table(name = "document")
-public class Document {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID sysId;
-    private String documentName;
-    private String documentType;
-    private String documentUrl;
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "documents")
+public class Document extends GlobalRecord{
+    String documentName;
+    String documentOriginalName;
+    String documentType;
+    String documentUrl;
 }

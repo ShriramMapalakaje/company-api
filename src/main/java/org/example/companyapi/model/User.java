@@ -1,20 +1,21 @@
 package org.example.companyapi.model;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
-public class User extends GlobalRecord{
-
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID sysId;
     private String fullName;
     private String email;
     private String password;
@@ -22,6 +23,9 @@ public class User extends GlobalRecord{
     private String addressLine1;
     private String addressLine2;
     private String addressLine3;
-    private int pinCode;
-
+    @ManyToMany
+    List<Role> roles;
+    private int pincode;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

@@ -1,22 +1,18 @@
 package org.example.companyapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
-@EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
+
+@Setter
+@Getter
 @NoArgsConstructor
-@Data
+@AllArgsConstructor
+@ToString
 @Entity
+@Table(name = "company_employees")
 public class CompanyEmployee extends User{
     private String companyEmployeeId;
     @ManyToOne
     private Company company;
-
 }
