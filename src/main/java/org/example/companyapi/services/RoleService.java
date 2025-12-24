@@ -4,6 +4,7 @@ import org.example.companyapi.model.Company;
 import org.example.companyapi.model.Role;
 import org.example.companyapi.model.User;
 import org.example.companyapi.repositories.RoleRepository;
+import org.example.companyapi.utilities.CommonUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
 package org.example.companyapi.services;
 
+import io.imagekit.sdk.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.example.companyapi.model.Document;
 import org.example.companyapi.repositories.DocumentRepository;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.print.Doc;
+
+import io.imagekit.sdk.models.results.Result;
 import java.io.IOException;
 
 @Slf4j
@@ -23,7 +26,7 @@ public class DocumentService {
                                    String fileName,
                                    String fileType,
                                    String folderName) throws ForbiddenException, TooManyRequestsException, InternalServerException, UnauthorizedException, BadRequestException, UnknownException, IOException {
-        Result result = imageKitService.uploadDocument(file, fileName, folderName);
+        Result result = (Result) imageKitService.uploadDocument(file, fileName, folderName);
         String docUrl = result.getUrl();
         Document document = new Document(
                 fileName,

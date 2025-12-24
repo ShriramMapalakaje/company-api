@@ -1,9 +1,9 @@
 package org.example.companyapi.services;
 
-import lombok.Value;
 import org.example.companyapi.model.User;
 import org.example.companyapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service

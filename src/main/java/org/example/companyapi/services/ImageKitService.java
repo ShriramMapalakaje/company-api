@@ -1,15 +1,17 @@
 package org.example.companyapi.services;
 
-import lombok.Value;
+import io.imagekit.sdk.ImageKit;
+import io.imagekit.sdk.config.Configuration;
+import io.imagekit.sdk.exceptions.*;
+import io.imagekit.sdk.models.FileCreateRequest;
+import io.imagekit.sdk.models.results.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.example.companyapi.exceptions.UploadFileException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.transform.Result;
 import java.io.IOException;
-import java.lang.module.Configuration;
 import java.util.Base64;
 
 @Slf4j
@@ -32,7 +34,7 @@ public class ImageKitService {
 
     public Result uploadDocument(MultipartFile file,
                                  String fileName,
-                                 String folder) throws ForbiddenException, TooManyRequestsException, InternalServerException, UnauthorizedException, BadRequestException, UnknownException, IOException {
+                                 String folder) throws ForbiddenException, TooManyRequestsException, InternalServerException, UnauthorizedException, BadRequestException, UnknownException, IOException, io.imagekit.sdk.exceptions.BadRequestException, IOException {
         try{
             long fileSizeInMB = file.getSize()/(1024*1024);
             if(fileSizeInMB > 25){

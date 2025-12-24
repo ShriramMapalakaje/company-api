@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface OperationRepository extends JpaRepository<Operation, UUID> {
     public Operation findByOperationName(String name);
-    public Operation existByOperationName(String name);
+    public boolean existsByOperationName(String name);
 }

@@ -1,5 +1,6 @@
 package org.example.companyapi.utilities;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
