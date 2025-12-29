@@ -6,68 +6,75 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Component
 public class OperationScheduler {
 
     @Autowired
     OperationRepository operationRepository;
 
-
     @Scheduled(initialDelay = 5000, fixedDelay = Long.MAX_VALUE)
     public void insertOperations() {
-        this.insertOperation("COMPANY_CREATE", "COMPANY");
-        this.insertOperation("COMPANY_VIEW", "COMPANY");
-        this.insertOperation("COMPANY_UPDATE", "COMPANY");
-        this.insertOperation("COMPANY_DELETE", "COMPANY");
-        this.insertOperation("COMPANY_ONBOARD", "COMPANY");
-        this.insertOperation("COMPANY_VERIFY", "COMPANY");
-        this.insertOperation("COMPANY_ACTIVATE", "COMPANY");
-        this.insertOperation("COMPANY_DEACTIVATE", "COMPANY");
-        this.insertOperation("PRODUCT_CREATE", "PRODUCT");
-        this.insertOperation("PRODUCT_VIEW", "PRODUCT");
-        this.insertOperation("PRODUCT_UPDATE", "PRODUCT");
-        this.insertOperation("PRODUCT_DELETE", "PRODUCT");
-        this.insertOperation("PRODUCT_PRICE_UPDATE", "PRODUCT");
-        this.insertOperation("PRODUCT_STOCK_UPDATE", "PRODUCT");
-        this.insertOperation("PRODUCT_BULK_UPLOAD", "PRODUCT");
-        this.insertOperation("PO_CREATE", "PURCHASE_ORDER");
-        this.insertOperation("PO_VIEW", "PURCHASE_ORDER");
-        this.insertOperation("PO_UPDATE", "PURCHASE_ORDER");
-        this.insertOperation("PO_CANCEL", "PURCHASE_ORDER");
-        this.insertOperation("PO_APPROVE", "PURCHASE_ORDER");
-        this.insertOperation("PO_REJECT", "PURCHASE_ORDER");
-        this.insertOperation("PO_CLOSE", "PURCHASE_ORDER");
-        this.insertOperation("SO_CREATE", "SALES_ORDER");
-        this.insertOperation("SO_VIEW", "SALES_ORDER");
-        this.insertOperation("SO_UPDATE", "SALES_ORDER");
-        this.insertOperation("SO_CANCEL", "SALES_ORDER");
-        this.insertOperation("SO_DISPATCH", "SALES_ORDER");
-        this.insertOperation("SO_DELIVER", "SALES_ORDER");
-        this.insertOperation("INVENTORY_VIEW", "INVENTORY");
-        this.insertOperation("INVENTORY_ADD_STOCK", "INVENTORY");
-        this.insertOperation("INVENTORY_REMOVE_STOCK", "INVENTORY");
-        this.insertOperation("INVENTORY_ADJUSTMENT", "INVENTORY");
-        this.insertOperation("INVENTORY_TRANSFER", "INVENTORY");
-        this.insertOperation("USER_CREATE", "USER");
-        this.insertOperation("USER_VIEW", "USER");
-        this.insertOperation("USER_UPDATE", "USER");
-        this.insertOperation("USER_DELETE", "USER");
-        this.insertOperation("USER_ASSIGN_ROLE", "USER");
-        this.insertOperation("USER_REVOKE_ROLE", "USER");
-        this.insertOperation("PAYMENT_INITIATE", "PAYMENT");
-        this.insertOperation("PAYMENT_RECEIVE", "PAYMENT");
-        this.insertOperation("PAYMENT_REFUND", "PAYMENT");
-        this.insertOperation("PAYMENT_FAILED", "PAYMENT");
-        this.insertOperation("INVITE_EMPLOYEE", "SECURITY");
-        this.insertOperation("CREATE_ROLE", "SECURITY");
-        this.insertOperation("VIEW_ROLE", "SECURITY");
-        this.insertOperation("VIEW_OPERATIONS", "SECURITY");
+        // Fetch all existing operations once to avoid repeated database queries
+        Set<String> existingOperationNames = operationRepository.findAll().stream()
+                .map(Operation::getOperationName)
+                .collect(Collectors.toSet());
+
+        this.processOperation("COMPANY_CREATE", "COMPANY", existingOperationNames);
+        this.processOperation("COMPANY_VIEW", "COMPANY", existingOperationNames);
+        this.processOperation("COMPANY_UPDATE", "COMPANY", existingOperationNames);
+        this.processOperation("COMPANY_DELETE", "COMPANY", existingOperationNames);
+        this.processOperation("COMPANY_ONBOARD", "COMPANY", existingOperationNames);
+        this.processOperation("COMPANY_VERIFY", "COMPANY", existingOperationNames);
+        this.processOperation("COMPANY_ACTIVATE", "COMPANY", existingOperationNames);
+        this.processOperation("COMPANY_DEACTIVATE", "COMPANY", existingOperationNames);
+        this.processOperation("PRODUCT_CREATE", "PRODUCT", existingOperationNames);
+        this.processOperation("PRODUCT_VIEW", "PRODUCT", existingOperationNames);
+        this.processOperation("PRODUCT_UPDATE", "PRODUCT", existingOperationNames);
+        this.processOperation("PRODUCT_DELETE", "PRODUCT", existingOperationNames);
+        this.processOperation("PRODUCT_PRICE_UPDATE", "PRODUCT", existingOperationNames);
+        this.processOperation("PRODUCT_STOCK_UPDATE", "PRODUCT", existingOperationNames);
+        this.processOperation("PRODUCT_BULK_UPLOAD", "PRODUCT", existingOperationNames);
+        this.processOperation("PO_CREATE", "PURCHASE_ORDER", existingOperationNames);
+        this.processOperation("PO_VIEW", "PURCHASE_ORDER", existingOperationNames);
+        this.processOperation("PO_UPDATE", "PURCHASE_ORDER", existingOperationNames);
+        this.processOperation("PO_CANCEL", "PURCHASE_ORDER", existingOperationNames);
+        this.processOperation("PO_APPROVE", "PURCHASE_ORDER", existingOperationNames);
+        this.processOperation("PO_REJECT", "PURCHASE_ORDER", existingOperationNames);
+        this.processOperation("PO_CLOSE", "PURCHASE_ORDER", existingOperationNames);
+        this.processOperation("SO_CREATE", "SALES_ORDER", existingOperationNames);
+        this.processOperation("SO_VIEW", "SALES_ORDER", existingOperationNames);
+        this.processOperation("SO_UPDATE", "SALES_ORDER", existingOperationNames);
+        this.processOperation("SO_CANCEL", "SALES_ORDER", existingOperationNames);
+        this.processOperation("SO_DISPATCH", "SALES_ORDER", existingOperationNames);
+        this.processOperation("SO_DELIVER", "SALES_ORDER", existingOperationNames);
+        this.processOperation("INVENTORY_VIEW", "INVENTORY", existingOperationNames);
+        this.processOperation("INVENTORY_ADD_STOCK", "INVENTORY", existingOperationNames);
+        this.processOperation("INVENTORY_REMOVE_STOCK", "INVENTORY", existingOperationNames);
+        this.processOperation("INVENTORY_ADJUSTMENT", "INVENTORY", existingOperationNames);
+        this.processOperation("INVENTORY_TRANSFER", "INVENTORY", existingOperationNames);
+        this.processOperation("USER_CREATE", "USER", existingOperationNames);
+        this.processOperation("USER_VIEW", "USER", existingOperationNames);
+        this.processOperation("USER_UPDATE", "USER", existingOperationNames);
+        this.processOperation("USER_DELETE", "USER", existingOperationNames);
+        this.processOperation("USER_ASSIGN_ROLE", "USER", existingOperationNames);
+        this.processOperation("USER_REVOKE_ROLE", "USER", existingOperationNames);
+        this.processOperation("PAYMENT_INITIATE", "PAYMENT", existingOperationNames);
+        this.processOperation("PAYMENT_RECEIVE", "PAYMENT", existingOperationNames);
+        this.processOperation("PAYMENT_REFUND", "PAYMENT", existingOperationNames);
+        this.processOperation("PAYMENT_FAILED", "PAYMENT", existingOperationNames);
+        this.processOperation("INVITE_EMPLOYEE", "SECURITY", existingOperationNames);
+        this.processOperation("CREATE_ROLE", "SECURITY", existingOperationNames);
+        this.processOperation("VIEW_ROLE", "SECURITY", existingOperationNames);
+        this.processOperation("VIEW_OPERATIONS", "SECURITY", existingOperationNames);
     }
 
-    public void insertOperation(String operationName, String operationType) {
-
-        // Prevent duplicate insert
-        if (operationRepository.findByOperationName(operationName) != null) {
+    private void processOperation(String operationName, String operationType, Set<String> existingOperationNames) {
+        if (existingOperationNames.contains(operationName)) {
             return;
         }
 
@@ -75,6 +82,18 @@ public class OperationScheduler {
         operation.setOperationName(operationName);
         operation.setOperationType(operationType);
 
+        operationRepository.save(operation);
+        existingOperationNames.add(operationName);
+    }
+    
+    // Kept for backward compatibility if needed, or can be removed
+    public void insertOperation(String operationName, String operationType) {
+        if (operationRepository.findByOperationName(operationName) != null) {
+            return;
+        }
+        Operation operation = new Operation();
+        operation.setOperationName(operationName);
+        operation.setOperationType(operationType);
         operationRepository.save(operation);
     }
 }

@@ -31,7 +31,7 @@ public class JwtUtil {
                                    List<String> roleNames){
         // As we want to generate JwtToken we need to think what user information we want to encrypt
         // In my Jwt Token I want to encrypt useremail and user roles
-        // Whatever the information which i want to encrypt int jwt token
+        // Whatever the information which I want to encrypt int jwt token
         // We call thems claims
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
@@ -74,7 +74,7 @@ public class JwtUtil {
                     break;
                 }
             }
-            if(flag == false){
+            if(!flag){
                 return false;
             }
         }

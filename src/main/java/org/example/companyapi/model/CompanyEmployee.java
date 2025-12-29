@@ -11,6 +11,7 @@ import lombok.*;
 @ToString
 @Entity
 @Table(name = "company_employees")
+@DiscriminatorValue("CompanyEmployee")
 public class CompanyEmployee extends User{
     private String companyEmployeeId;
     @ManyToOne

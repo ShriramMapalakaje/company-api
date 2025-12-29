@@ -24,14 +24,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String jwtToken = request.getHeader("Authorization");
-        if(jwtToken == null || jwtToken.isBlank()){
-            // Here we are not setting any authentication and directly calling filterChain.doFilter()
-            // It will reject the request
+        String authHeader = request.getHeader("Authorization");
+        if(authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);
             return;
         }
-        jwtToken = jwtToken.trim();
+
+        String jwtToken = authHeader.substring(7);
+
         if(!jwtUtil.isTokenValid(jwtToken)){
             filterChain.doFilter(request, response);
             return;

@@ -11,6 +11,8 @@ import java.util.UUID;
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("User")
 @Table(name = "users")
 public class User {
     @Id
