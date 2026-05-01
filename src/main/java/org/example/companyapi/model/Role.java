@@ -6,10 +6,12 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +21,8 @@ public class Role extends GlobalRecord{
     // sales_manager
     @Column(unique = true, nullable = false)
     String roleId;
-    String roleName;
+    @Column(unique = true)
+    String roleName; // Tcs_Admin, Infosys_salesmanager
     @ManyToMany
     List<Operation> operations;
 }

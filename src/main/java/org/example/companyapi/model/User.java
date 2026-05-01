@@ -11,21 +11,21 @@ import java.util.UUID;
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("User")
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID sysId;
     private String fullName;
+    @Column(unique = true)
     private String email;
     private String password;
+    private String status;
     private String phoneNumber;
     private String addressLine1;
     private String addressLine2;
     private String addressLine3;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Role> roles;
     private int pincode;
     private LocalDateTime createdAt;
