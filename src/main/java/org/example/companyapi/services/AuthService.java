@@ -1,10 +1,21 @@
 package org.example.companyapi.services;
 
+import io.jsonwebtoken.Claims;
+import org.example.companyapi.dto.CompanyLoginResp;
+import org.example.companyapi.dto.UserLoginDto;
+import org.example.companyapi.dto.UserLoginRespDto;
+import org.example.companyapi.exceptions.InvalidCredentialsException;
+import org.example.companyapi.exceptions.UnAuthorizedException;
 import org.example.companyapi.model.Company;
+import org.example.companyapi.model.Operation;
+import org.example.companyapi.model.Role;
 import org.example.companyapi.model.User;
 import org.example.companyapi.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AuthService {

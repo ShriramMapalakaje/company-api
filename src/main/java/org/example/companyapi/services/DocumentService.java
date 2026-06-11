@@ -26,7 +26,7 @@ public class DocumentService {
                                    String fileName,
                                    String fileType,
                                    String folderName) throws ForbiddenException, TooManyRequestsException, InternalServerException, UnauthorizedException, BadRequestException, UnknownException, IOException {
-        Result result = (Result) imageKitService.uploadDocument(file, fileName, folderName);
+        Result result = imageKitService.uploadDocument(file, fileName, folderName);
         String docUrl = result.getUrl();
         Document document = new Document(
                 fileName,

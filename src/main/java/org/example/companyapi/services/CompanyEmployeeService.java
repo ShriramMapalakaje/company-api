@@ -1,6 +1,8 @@
 package org.example.companyapi.services;
 
 
+import org.example.companyapi.dto.InviteEmployeeDto;
+import org.example.companyapi.enums.UserStatus;
 import org.example.companyapi.model.Company;
 import org.example.companyapi.model.CompanyEmployee;
 import org.example.companyapi.model.Role;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CompanyEmployeeService {
@@ -46,5 +49,35 @@ public class CompanyEmployeeService {
         companyEmployee.setRoles(List.of(role));
         // We need to create the role for the company admin
         return this.save(companyEmployee);
+    }
+
+    public CompanyEmployee createEmployeeForCompany(
+            Company company,
+            User inviter,
+            InviteEmployeeDto inviteEmployeeDto
+    ){
+
+        CompanyEmployee companyEmployee = new CompanyEmployee();
+        companyEmployee.setEmail(inviteEmployeeDto.getEmail());
+        companyEmployee.setPassword(CommonUtility.generateRandomPassword(15));
+        companyEmployee.setFullName(inviteEmployeeDto.getFullName());
+        companyEmployee.setPincode(inviteEmployeeDto.getPincode());
+        companyEmployee.setAddressLine1(inviteEmployeeDto.getAddressLine1());
+        companyEmployee.setAddressLine2(inviter.getAddressLine2());
+        companyEmployee.setAddressLine3(inviter.getAddressLine3());
+        companyEmployee.setCompany(company);
+        companyEmployee.setCreatedAt(LocalDateTime.now());
+        companyEmployee.setCompanyEmployeeId(CommonUtility.COMPANY_EMPLOYEE_ENTITY_NAME);
+        companyEmployee.setPhoneNumber(inviteEmployeeDto.getPhoneNumber());
+        companyEmployee.setStatus(UserStatus.INVITED.toString());
+        companyEmployee.setUpdatedAt(LocalDateTime.now());
+        companyEmployee.setRoles(roleService.fetchAllRolesBySysId(inviteEmployeeDto.getRoles()));
+        return this.save(companyEmployee);
+
+    }
+
+    public Company getEmployeeCompanyDetails(UUID userSysId){
+        CompanyEmployee companyEmployee = companyEmployeeRepository.findById(userSysId).orElse(null);
+        return companyEmployee.getCompany();
     }
 }

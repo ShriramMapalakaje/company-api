@@ -4,6 +4,7 @@ package org.example.companyapi.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.example.companyapi.model.Role;
 import org.example.companyapi.model.User;
 import org.example.companyapi.services.UserService;
@@ -17,6 +18,7 @@ import java.util.*;
  * This class will contain utility logics like generateJwtToken, DecryptJwtToken,
  * ValidateJwtToken
  */
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -31,7 +33,7 @@ public class JwtUtil {
                                    List<String> roleNames){
         // As we want to generate JwtToken we need to think what user information we want to encrypt
         // In my Jwt Token I want to encrypt useremail and user roles
-        // Whatever the information which I want to encrypt int jwt token
+        // Whatever the information which i want to encrypt int jwt token
         // We call thems claims
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
@@ -74,11 +76,12 @@ public class JwtUtil {
                     break;
                 }
             }
-            if(!flag){
+            if(flag == false){
+                log.warn("Invalid Token");
                 return false;
             }
         }
-
+        log.info("Token is valid");
         return true;
 
     }

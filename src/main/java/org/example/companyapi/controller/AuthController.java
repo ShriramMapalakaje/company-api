@@ -1,5 +1,9 @@
 package org.example.companyapi.controller;
 
+import org.example.companyapi.dto.CreateRoleRequestDto;
+import org.example.companyapi.model.Role;
+import org.example.companyapi.model.User;
+import org.example.companyapi.services.AuthService;
 import org.example.companyapi.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

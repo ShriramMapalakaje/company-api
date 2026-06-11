@@ -56,5 +56,4 @@ public class MappingUtility {
         return company;
     }
 
-
 }
