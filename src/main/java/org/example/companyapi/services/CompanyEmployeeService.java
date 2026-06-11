@@ -25,11 +25,9 @@ public class CompanyEmployeeService {
     RoleService roleService;
     @Autowired
     UserService userService;
-
     public CompanyEmployee save(CompanyEmployee companyEmployee){
         return  companyEmployeeRepository.save(companyEmployee);
     }
-
     public CompanyEmployee createFirstAdminAccount(Company company){
         User botUser = userService.getBotUser();
         CompanyEmployee companyEmployee = new CompanyEmployee();
@@ -75,7 +73,6 @@ public class CompanyEmployeeService {
         return this.save(companyEmployee);
 
     }
-
     public Company getEmployeeCompanyDetails(UUID userSysId){
         CompanyEmployee companyEmployee = companyEmployeeRepository.findById(userSysId).orElse(null);
         return companyEmployee.getCompany();

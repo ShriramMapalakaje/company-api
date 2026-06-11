@@ -19,7 +19,6 @@ public class MailService {
     TemplateEngine templateEngine;
     @Autowired
     JavaMailSender javaMailSender;
-
     public void sendInviteEmployeeMail(
             CompanyEmployee invitee,
             User inviter

@@ -75,7 +75,6 @@ public class CompanyService {
         // CompanyService will call RoleService to get roles by company
         return roleService.getRolesByCompanyName(company.getLegalName());
     }
-
     public Role createRoleForCompanyByUserSession(User user, CreateRoleRequestDto createRoleRequestDto){
         Company company = companyEmployeeService.getEmployeeCompanyDetails(user.getSysId());
         // Role Service
@@ -121,7 +120,6 @@ public class CompanyService {
 
         return companyEmployee;
     }
-
 
     public Company save(Company company){
         return companyRepository.save(company);

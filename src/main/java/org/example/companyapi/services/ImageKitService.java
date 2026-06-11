@@ -52,9 +52,9 @@ public class ImageKitService {
                 base64,
                 fileName
         );
-        // Setting folder
+
         fileCreateRequest.setFolder(folder);
-        // Image
+
         ImageKit imageKit = getImageKitObject();
         // Upload
         Result result = imageKit.upload(fileCreateRequest);
